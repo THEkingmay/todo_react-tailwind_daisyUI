@@ -97,7 +97,7 @@ export default function App(){
        document.documentElement.setAttribute("data-theme", selectedTheme);
      };
      return(
-          <div data-theme={theme}className='max-w-3xl min-h-screen mx-auto flex flex-col  p-5  text-center shadow-xl'>
+          <div data-theme={theme}className='min-h-screen mx-auto flex flex-col  p-5  text-center shadow-xl'>
                     <ThemeSwitcher handleThemeChange={handleThemeChange} theme={theme}/>
                     <span className='absolute top-0 right-0'>Today : {TODAY}</span>
                     <h1 className="text-3xl font-bold underline">LIST</h1>
