@@ -42,6 +42,9 @@ export default function App(){
           console.log("add item app.jsx: ",newItem)
     }
      const deleteItem=(id)=>{
+          const userConfirmed = window.confirm("Are you sure you want to delete this?");
+          if (!userConfirmed) 
+               return
           setItem(items.filter((item)=>item.id!==id))
           console.log("delete item id : ",id)
           if(items.length===1){
@@ -99,7 +102,7 @@ export default function App(){
      return(
           <div data-theme={theme}className='min-h-screen mx-auto flex flex-col  p-5  text-center shadow-xl'>
                     <ThemeSwitcher handleThemeChange={handleThemeChange} theme={theme}/>
-                    <span className='absolute top-0 right-0'>Today : {TODAY}</span>
+                    <span className='absolute top-0 right-10'>Today : {TODAY}</span>
                     <h1 className="text-3xl font-bold underline">LIST</h1>
                     <FormComponents 
                               addItem={addNewItem} 

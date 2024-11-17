@@ -34,6 +34,7 @@ export default function FormComponents(props) {
         // ตรวจสอบว่า description และ date ไม่เป็นค่าว่าง
         if (description === '' || date === '') {
             console.log("Data must not be null")
+            alert("Data must not be null")
             return
         }
         if(props.isEdit){
