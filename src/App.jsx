@@ -10,6 +10,7 @@ export default function App(){
      const [idSelected,setIdSelected ]= useState('')
      const [TODAY,setTODAY] = useState(new Date().toLocaleDateString('en-US'))
      const [theme, setTheme] = useState("");
+     const [isLater,setIsLater] = useState(false)
      const resetEditStatus = () =>{
           setEditStatus(false)
      }
@@ -62,12 +63,14 @@ export default function App(){
            // รีเซ็ตค่าก่อนตั้งค่าใหม่
           setDescription('');
           setDate('');
+          setIsLater(false)
           setIdSelected('');
 
           // ตั้งค่าใหม่
           setTimeout(() => {
                setDescription(selItem.description);
                setDate(selItem.date);
+               setIsLater(selItem.isLater)
                setIdSelected(id);
           }, 0); // ใช้ `setTimeout` เพื่อให้ React จัดการ re-render
      }
@@ -75,7 +78,7 @@ export default function App(){
           const updatedItems = items.map(e => {
                if (e.id === id) {
                     const formattedDate = new Date(newData[1]);
-                   return { ...e, description: newData[0], date: formattedDate.toLocaleDateString('en-US') };
+                   return { ...e, description: newData[0], date: formattedDate.toLocaleDateString('en-US'),isLater:newData[2] };
                }
                return e; // คืนค่าเดิมถ้า id ไม่ตรง
            });
@@ -108,6 +111,7 @@ export default function App(){
                               addItem={addNewItem} 
                               date={currItemDate} 
                               description={currItemDescription}
+                              isLater={isLater}
                               isEdit={isEdit}
                               resetEditStatus={resetEditStatus}
                               idSelected={idSelected}

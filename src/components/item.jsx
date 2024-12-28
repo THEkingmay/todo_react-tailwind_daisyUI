@@ -14,10 +14,12 @@ const ITEM = ({
     useEffect(()=>console.log("item render"),[])
     const [isCheck , setCheck ] = useState(status)
     return(
-    <li className={`p-2 rounded-md shadow mt-2 border flex justify-between `}>
+    <li className={` p-2 rounded-md shadow mt-2 border flex justify-between `}>
        <div className="w-3/4 flex flex-col  items-start border-r">
                 <div className='w-full text-start p-2'>
-                    <span className='underline font-bold '>Description</span>
+                    <span className='underline font-bold'>
+                        Description
+                    </span>
                     <br />
                     <span className={`break-words text-lg ${isCheck?"line-through":""}`}>
                     {description.split('\n').map((line, index) => (

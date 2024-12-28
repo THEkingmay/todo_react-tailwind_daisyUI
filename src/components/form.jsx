@@ -9,11 +9,14 @@ export default function FormComponents(props) {
             const date = new Date(props.date);
             const dateFormatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
             setDate(dateFormatted);
-        }        
-    }, [props.description, props.date])
+        }      
+        setIsLater(props.isLater)  
+    }, [props.description, props.date,props.isLater])
     // กำหนดค่าเริ่มต้นสำหรับ description และ date จาก props
     const [description, setDescription] = useState(props.description || '')  // ถ้า props ไม่มี description ให้เริ่มต้นเป็น string ว่าง
     const [date, setDate] = useState(props.date || new Date().toISOString().split('T')[0])  // ถ้า props ไม่มี date ให้ใช้วันที่ปัจจุบัน
+    const [isLater,setIsLater] = useState(props.isLater || false)
+    console.log("IS LATER FROM PROPS !! : ",props.isLater,props.description)
     const [editTxt,setEditTxt] = useState('ADD')
     
     useEffect(()=>{
@@ -40,9 +43,10 @@ export default function FormComponents(props) {
         if(props.isEdit){
             console.log("This is edit")
             props.resetEditStatus()
-            props.editKnowIdNewData([description,date],props.idSelected)
+            props.editKnowIdNewData([description,date,isLater],props.idSelected)
             setDescription('')
             setDate(new Date().toISOString().split('T')[0])
+            setIsLater(false)
             return
         }
     
@@ -52,13 +56,15 @@ export default function FormComponents(props) {
             description,
             writeDate: new Date().toLocaleDateString('en-US'),
             date: formattedDate,
-            status: false
+            status: false,
+            isLater
         }
 
         // ส่งข้อมูล itemData ไปยัง parent component (App)
         props.addItem(itemData)
 
         // รีเซ็ตค่าในฟอร์ม
+        setIsLater(false)
         setDescription('')
         setDate(new Date().toISOString().split('T')[0])  // รีเซ็ตวันที่เป็นวันที่ปัจจุบัน
     }
@@ -77,14 +83,20 @@ export default function FormComponents(props) {
                         className='textarea border shadow w-full p-3 text-md'
                     />
                 </div>
-                <div className="flex flex-col flex flex-col items-start w-full p-3">
-                    <label className='text-l font-bold'>Date (mm/dd/yyyy)</label>
-                    <input
-                        type="date"
-                        onChange={dateHandle}
-                        value={date}
-                        className='input border shadow w-full p-3 text-md'
-                    />
+                <div className="flex  w-full p-3">
+                   <div className='w-1/6 items-center flex flex-col '>
+                        <div className='font-bold'>Later</div>
+                        <input type="checkbox" checked={isLater} onChange={()=>setIsLater(!isLater)}  class="checkbox checkbox-accent checkbox-lg" />
+                   </div>
+                   <div className='w-5/6 flex flex-col items-start'> 
+                        <label className='ml-2 text-l font-bold'>Date (mm/dd/yyyy)</label>
+                        <input
+                            type="date"
+                            onChange={dateHandle}
+                            value={date}
+                            className='input border shadow w-full p-3 text-md'
+                        />
+                    </div>
                 </div>
                 <div className="w-full flex justify-center">
                     <button className='btn  btn-sm  shadow  w-2/3 p-2 rounded-l' type="submit" onClick={saveData}>{editTxt}</button>
